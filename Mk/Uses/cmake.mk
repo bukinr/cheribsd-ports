@@ -44,6 +44,9 @@
 #
 # MAINTAINER: kde@FreeBSD.org
 
+# CHERI: c64 msgfmt is broken, use a64 version globally
+CMAKE_ARGS+=	-DGETTEXT_MSGFMT_EXECUTABLE=/usr/local64/bin/msgfmt
+
 .if !defined(_INCLUDE_USES_CMAKE_MK)
 _INCLUDE_USES_CMAKE_MK=	yes
 
