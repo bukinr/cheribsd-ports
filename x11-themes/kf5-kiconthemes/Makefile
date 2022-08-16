@@ -9,12 +9,18 @@ USES=		cmake compiler:c++11-lib gettext kde:5 qt:5 tar:xz
 USE_KDE=	archive auth codecs config configwidgets coreaddons \
 		i18n itemviews widgetsaddons \
 		ecm:build
-USE_QT=		concurrent core dbus gui script svg widgets xml \
-		buildtools:build qmake:build
+USE_QT=		concurrent core dbus gui svg widgets xml \
+		buildtools:build qmake:build 
 
 OPTIONS_DEFINE=	ICONS
 OPTIONS_DEFAULT=	ICONS
 ICONS_DESC=	Install Breeze Icons
 ICONS_USE=	KDE=breeze-icons:run
 
-.include <bsd.port.mk>
+.include <bsd.port.pre.mk>
+
+.if ${ARCH} != aarch64c && ${ARCH} != riscv64c
+USE_QT+=	script
+.endif
+
+.include <bsd.port.post.mk>
