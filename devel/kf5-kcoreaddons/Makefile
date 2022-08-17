@@ -8,7 +8,7 @@ COMMENT=	KF5 addons to QtCore
 LICENSE=	LGPL21+ BSD3CLAUSE
 LICENSE_COMB=	multi
 
-USES=		cmake compiler:c++11-lib kde:5 qt:5 shared-mime-info tar:xz
+USES=		cmake compiler:c++11-lib kde:5 qt:5 tar:xz
 USE_KDE=	ecm:build
 USE_QT=		core linguisttools \
 		buildtools:build qmake:build
@@ -27,6 +27,11 @@ FAM_USES=		fam
 FAM_CMAKE_BOOL_OFF=	CMAKE_DISABLE_FIND_PACKAGE_FAM
 
 .include <bsd.port.pre.mk>
+
+.if ${ARCH} != aarch64c && ${ARCH} != riscv64c
+USES+=	shared-mime-info
+.endif
+
 # FreeBSD base gained /etc/os-release in r354922, which
 # corresponds to __FreeBSD_version 1300060
 .if ${OSVERSION} < 1300060
