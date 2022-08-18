@@ -12,4 +12,10 @@ USE_QT=		core gui network \
 
 CMAKE_ARGS=	-DCMAKE_DISABLE_FIND_PACKAGE_Qt5XmlPatterns=TRUE
 
-.include <bsd.port.mk>
+.include <bsd.port.pre.mk>
+
+.if ${ARCH} == aarch64c || ${ARCH} == riscv64c
+CMAKE_ARGS+=	-DPERL_EXECUTABLE=/usr/local64/bin/perl
+.endif
+
+.include <bsd.port.post.mk>
