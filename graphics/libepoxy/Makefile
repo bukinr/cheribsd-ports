@@ -15,8 +15,8 @@ USE_GL=		glesv2 egl
 USE_LDCONFIG=	yes
 SHEBANG_FILES=	src/gen_dispatch.py
 
-OPTIONS_DEFINE=		TEST X11
-OPTIONS_DEFAULT=	X11
+OPTIONS_DEFINE=		TEST X11 EGL
+OPTIONS_DEFAULT=	X11 EGL
 OPTIONS_SUB=		yes
 
 TEST_MESON_TRUE=	tests
@@ -25,5 +25,8 @@ X11_USES=		xorg
 X11_USE=		GL=gl XORG=x11
 X11_MESON_YES=		glx
 X11_MESON_TRUE=		x11
+
+EGL_DESC=		EGL support
+EGL_MESON_YES=		egl
 
 .include <bsd.port.mk>
