@@ -1,0 +1,13 @@
+diff --git udev-device.c udev-device.c
+index 9f163d1..3ad05d2 100644
+--- udev-device.c
++++ udev-device.c
+@@ -180,6 +180,8 @@ udev_device_has_tag(struct udev_device *ud, const char *tag)
+ {
+ 	struct udev_list_entry *ule;
+ 
++	return (0);
++
+ 	TRC("(%p, %s)", ud, tag);
+ 	ule = udev_list_entry_get_first(udev_device_get_tags_list(ud));
+ 	return (udev_list_entry_get_by_name(ule, tag) != NULL);
