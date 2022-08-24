@@ -24,6 +24,10 @@ MAKE_ARGS=	SUBDIRS=pixman
 
 .include <bsd.port.pre.mk>
 
+.if ${ARCH} == aarch64c || ${ARCH} == riscv64c
+CONFIGURE_ARGS+=	--disable-a64-neon
+.endif
+
 .if ${ARCH} == "armv6" || ${ARCH} == "armv7"
 BUILD_DEPENDS+=	${LOCALBASE}/bin/as:devel/binutils
 CONFIGURE_ENV+=	CCASFLAGS="${CFLAGS} -B${LOCALBASE}/bin -no-integrated-as"
