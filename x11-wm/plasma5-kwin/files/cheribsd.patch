@@ -175,3 +175,28 @@ diff -ru src/tabletmodemanager.cpp src/tabletmodemanager.cpp
  namespace KWin
  {
  
+diff -ru src/backends/drm/drm_buffer.cpp src/backends/drm/drm_buffer.cpp
+--- src/backends/drm/drm_buffer.cpp	2022-07-11 11:51:26.000000000 +0100
++++ src/backends/drm/drm_buffer.cpp	2022-08-23 23:13:55.079283000 +0100
+@@ -121,7 +121,7 @@
+     if (drmIoctl(m_gpu->fd(), DRM_IOCTL_MODE_MAP_DUMB, &mapArgs) != 0) {
+         return false;
+     }
+-    void *address = mmap(nullptr, m_bufferSize, PROT_WRITE, MAP_SHARED, m_gpu->fd(), mapArgs.offset);
++    void *address = mmap(nullptr, m_bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, m_gpu->fd(), mapArgs.offset);
+     if (address == MAP_FAILED) {
+         return false;
+     }
+diff -ru src/backends/fbdev/fb_backend.cpp src/backends/fbdev/fb_backend.cpp
+--- src/backends/fbdev/fb_backend.cpp	2022-07-11 11:51:26.000000000 +0100
++++ src/backends/fbdev/fb_backend.cpp	2022-08-23 23:13:43.727961000 +0100
+@@ -191,7 +191,7 @@
+         // not valid
+         return;
+     }
+-    void *mem = mmap(nullptr, m_bufferLength, PROT_WRITE, MAP_SHARED, m_fd, 0);
++    void *mem = mmap(nullptr, m_bufferLength, PROT_READ | PROT_WRITE, MAP_SHARED, m_fd, 0);
+     if (mem == MAP_FAILED) {
+         qCWarning(KWIN_FB) << "Failed to mmap frame buffer";
+         return;
+Only in work-: stage
