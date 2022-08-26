@@ -43,8 +43,6 @@ MESON_ARGS+=	-Dgallium-drivers="" \
 		-Dvulkan-drivers="" \
 		-Dglvnd=true \
 		-Dprefer-iris=true
-# Building EGL and GBM requires a dri driver so add r100
-MESON_ARGS+=	-Ddri-drivers="r100"
 
 .if ${PORT_OPTIONS:MPLATFORM_X11}
 MESA_PLATFORMS+=	x11
@@ -61,6 +59,15 @@ MESA_PLATFORMS+=	wayland
 .endif
 
 MESON_ARGS+=	-Dplatforms="${MESA_PLATFORMS:ts,:tl}"
+
+.if ${ARCH} == aarch64c || ${ARCH} == riscv64c
+MESON_ARGS+=	-Dllvm=disabled -Dgles1=enabled -Dgles2=enabled
+MESON_ARGS+=   -Ddri-drivers=""
+MESON_ARGS+=   -Dgallium-drivers=panfrost,swrast
+.else
+# Building EGL and GBM requires a dri driver so add r100
+MESON_ARGS+=   -Ddri-drivers="r100"
+.endif
 
 .if ${ARCH} == "i386"
 # PR230239 Fix the build for i386 when WITH_LLD_IS_LD is set

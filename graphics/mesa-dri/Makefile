@@ -32,13 +32,15 @@ ALL_GALLIUM_DRIVERS=	CROCUS IRIS PANFROST R300 R600 RADEONSI SVGA SWRAST
 ALL_VULKAN_DRIVERS=	INTEL AMD SWRAST
 
 GALLIUM_DRIVERS+=	SWRAST	# llvmpipe
+.if ${ARCH} != aarch64c
 VULKAN_DRIVERS+=	SWRAST	# lavapipe
+.endif
 
 .if ${ARCH:Marm*}
 DRI_DRIVERS+=	R100
 .endif
 
-.if ${ARCH} == aarch64
+.if ${ARCH} == aarch64 || ${ARCH} == aarch64c
 GALLIUM_DRIVERS+=	PANFROST
 .endif
 
@@ -72,10 +74,20 @@ USE_XORG+=		xcb xrandr
 MESA_PLATFORMS+=	wayland
 .endif
 
+.if ${ARCH} != aarch64c && ${ARCH} != riscv64c
 MESON_ARGS+=	-Ddri-drivers="${DRI_DRIVERS:ts,:tl}" \
 		-Dgallium-drivers="${GALLIUM_DRIVERS:ts,:tl}" \
 		-Dvulkan-drivers="${VULKAN_DRIVERS:ts,:tl}" \
-		-Dplatforms="${MESA_PLATFORMS:ts,:tl}"
+		-Dplatforms="${MESA_PLATFORMS:ts,:tl}" \
+		-Degl=disabled
+.else
+MESON_ARGS+=	-Ddri-drivers="" \
+		-Dgallium-drivers="${GALLIUM_DRIVERS:ts,:tl}" \
+		-Dvulkan-drivers="" \
+		-Dplatforms="${MESA_PLATFORMS:ts,:tl}" \
+		-Dllvm=disabled \
+		-Degl=enabled
+.endif
 
 # Disable some options
 MESON_ARGS+=	-Dgallium-xa=disabled \
@@ -84,7 +96,6 @@ MESON_ARGS+=	-Dgallium-xa=disabled \
 		-Dgles1=disabled \
 		-Dgles2=disabled \
 		-Dglx=disabled \
-		-Degl=disabled \
 		-Dosmesa=false \
 		-Dtools=""
 
