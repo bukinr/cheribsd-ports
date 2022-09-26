@@ -1,0 +1,18 @@
+--- js/src/gc/Memory.cpp	2022-09-26 12:03:35.821615000 +0100
++++ js/src/gc/Memory.cpp	2022-09-26 12:03:57.178195000 +0100
+@@ -442,6 +442,7 @@
+   return region;
+ #else
+ 
++#if 0
+ #  ifdef JS_64BIT
+   // Use the scattershot allocator if the address range is large enough.
+   if (UsingScattershotAllocator()) {
+@@ -453,6 +454,7 @@
+     return region;
+   }
+ #  endif
++#endif
+ 
+   // Try to allocate the region. If the returned address is aligned,
+   // either we OOMed (region is nullptr) or we're done.
