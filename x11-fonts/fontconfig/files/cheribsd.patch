@@ -395,3 +395,41 @@ index 82c6bed..e1cd507 100644
  
      for (i = 0; i < FcPatternObjectCount (pat); i++)
      {
+diff --git a/src/fcserialize.c b/src/fcserialize.c
+index d2f221d..b137baa 100644
+--- src/fcserialize.c
+--- src/fcserialize.c
+@@ -78,7 +78,7 @@ FcSerializeDestroy (FcSerialize *serialize)
+ FcBool
+ FcSerializeAlloc (FcSerialize *serialize, const void *object, int size)
+ {
+-    uintptr_t	bucket = ((uintptr_t) object) % FC_SERIALIZE_HASH_SIZE;
++    size_t	bucket = ((ptraddr_t) object) % FC_SERIALIZE_HASH_SIZE;
+     FcSerializeBucket  *buck;
+ 
+     for (buck = serialize->buckets[bucket]; buck; buck = buck->next)
+@@ -113,7 +113,7 @@ FcSerializeReserve (FcSerialize *serialize, int size)
+ intptr_t
+ FcSerializeOffset (FcSerialize *serialize, const void *object)
+ {
+-    uintptr_t	bucket = ((uintptr_t) object) % FC_SERIALIZE_HASH_SIZE;
++    size_t	bucket = ((ptraddr_t) object) % FC_SERIALIZE_HASH_SIZE;
+     FcSerializeBucket  *buck;
+ 
+     for (buck = serialize->buckets[bucket]; buck; buck = buck->next)
+diff --git src/fccharset.c src/fccharset.c
+index d7c47dd..8a5c4ce 100644
+--- src/fccharset.c
++++ src/fccharset.c
+@@ -559,8 +559,11 @@ FcCharSetMerge (FcCharSet *a, const FcCharSet *b, FcBool *changed)
+ 	    }
+ 	    else
+ 	    {
++/* TODO: add cheri support. */
++#if 0
+ 		FcCharLeaf *al = FcCharSetLeaf(a, ai);
+ 		FcCharSetUnionLeaf (al, al, bl);
++#endif
+ 	    }
+ 
+ 	    ai++;
