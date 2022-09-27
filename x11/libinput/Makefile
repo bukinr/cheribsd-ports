@@ -40,6 +40,7 @@ SHEBANG_FILES+=	tools/test_tool_option_parsing.py \
 OPTIONS_DEFINE=	DEBUG_GUI LIBWACOM
 OPTIONS_DEFAULT=LIBWACOM
 OPTIONS_SUB=	yes
+OPTIONS_EXCLUDE_purecap=	LIBWACOM
 
 DEBUG_GUI_DESC=	Build the GUI event viewer
 LIBWACOM_DESC=	Libwacom support
