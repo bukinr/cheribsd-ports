@@ -16,6 +16,7 @@ USE_QT=		core linguisttools \
 OPTIONS_DEFINE=		FAM INOTIFY
 OPTIONS_DEFAULT=	INOTIFY
 OPTIONS_SUB=		yes
+OPTIONS_EXCLUDE_purecap=INOTIFY
 
 INOTIFY_DESC=		Filesystem alteration notifications using inotify
 INOTIFY_LIB_DEPENDS=	libinotify.so:devel/libinotify
