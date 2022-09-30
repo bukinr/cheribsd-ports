@@ -16,19 +16,28 @@ USE_KDE=	attica auth codecs completion config configwidgets coreaddons \
 		dbusaddons emoticons i18n iconthemes init itemmodels itemviews \
 		jobwidgets kio libksysguard newstuff notifications service \
 		solid widgetsaddons windowsystem xmlgui \
-		doctools:build ecm:build
+		ecm:build
 USE_QT=		concurrent core dbus gui network widgets xml \
 		buildtools:build qmake:build testlib:build
 USE_XORG=	x11
 
-OPTIONS_DEFINE=		INOTIFY
+OPTIONS_DEFINE=		DOCBOOK INOTIFY
 OPTIONS_DEFAULT=	${OPTIONS_DEFINE}
 OPTIONS_SUB=		yes
+OPTIONS_EXCLUDE_purecap=DOCBOOK INOTIFY
+
+DOCBOOK_DESC=		Doctools build
 
 INOTIFY_DESC=		Filesystem alteration notifications using inotify
 INOTIFY_LIB_DEPENDS=	libinotify.so:devel/libinotify
 INOTIFY_CMAKE_BOOL_OFF=	CMAKE_DISABLE_FIND_PACKAGE_Inotify
 
 KDE_PLASMA_VERSION=	5.22.0
+
+.include <bsd.port.options.mk>
+
+.if ${PORT_OPTIONS:MDOCBOOK}
+USE_KDE+=	doctools:build
+.endif
 
 .include <bsd.port.mk>
