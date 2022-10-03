@@ -1,0 +1,20 @@
+--- CMakeLists.txt	2022-10-01 22:26:31.912154000 +0100
++++ CMakeLists.txt	2022-10-01 22:26:57.273631000 +0100
+@@ -9,7 +9,6 @@
+ endif()
+ 
+ add_subdirectory( access )
+-add_subdirectory( dateandtime )
+ add_subdirectory( ksplash )
+ 
+ add_subdirectory( launch )
+--- CMakeLists.txt	2022-10-01 22:26:45.842415000 +0100
++++ CMakeLists.txt	2022-10-01 22:30:49.118275000 +0100
+@@ -220,7 +224,6 @@
+ 
+ add_subdirectory(layout-templates)
+ 
+-add_subdirectory(doc)
+ add_subdirectory(runners)
+ add_subdirectory(containments)
+ add_subdirectory(toolboxes)
